@@ -55,6 +55,15 @@ migrate-action:
 # 	go mod tidy && \
 # 	go run cmd/todoapp/main.go
 
+logs-cleanup:
+	@read -p "очистить все log файлы? опасность потрять ЛОГИ. [y/N]: " ans;\
+	if  ["$$ans" = "y"]; then \
+		docker compose down todoapp-postgres port-forwarder && \
+		rm -rf out/pgdata && \
+		echo "файлы логов очищены"; \
+	else \
+		echo "очистка логов отменена"; \
+	fi
 
 todoapp-run:
 	@go mod tidy
