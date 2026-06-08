@@ -1,7 +1,9 @@
 include .env
 export
 
-export PROJECT_ROOT=$(shell pwd)
+# export PROJECT_ROOT=$(shell pwd)
+# Вариант чисто под Windows (cmd.exe)
+export PROJECT_ROOT = $(shell cd)
 
 env-up:
 	docker compose up -d todoapp-postgres
@@ -69,3 +71,10 @@ todoapp-run:
 	@go mod tidy
 	
 	set POSTGRES_HOST=localhost& set LOGGER_FOLDER=./out/logs& go run cmd/todoapp/main.go
+
+todoapp-deploy:
+	docker compose up -d --build todoapp
+
+
+ps:
+	@docker compose ps
