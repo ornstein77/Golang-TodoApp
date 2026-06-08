@@ -3,7 +3,7 @@ export
 
 # export PROJECT_ROOT=$(shell pwd)
 # Вариант чисто под Windows (cmd.exe)
-export PROJECT_ROOT = $(shell cd)
+# export PROJECT_ROOT = $(shell cd)
 
 env-up:
 	docker compose up -d todoapp-postgres
@@ -24,19 +24,22 @@ env-port-close:
 	@docker compose down port-forwarder
 
 migrate-create:
-# 	@if [ -z "$(seq)"]; then \
-# 		echo "отсутствует необходимый параметр seq"; \
-# 		exit 1; \
-# 	fi;\
-# 	docker compose run --rm todoapp-postgres-migrate \
-# 		create \
-# 		-ext sql \
-# 		-dir /migrations \
-# 		-seq "$(seq)"
-	ifndef seq
-		$(error отсутствует необходимый параметр seq. Пример: make migrate-create seq=init)
-	endif
-		docker compose run --rm todoapp-postgres-migrate create -ext sql -dir /migrations -seq "$(seq)"
+linux-edition
+	@if [ -z "$(seq)"]; then \
+		echo "отсутствует необходимый параметр seq"; \
+		exit 1; \
+	fi;\
+	docker compose run --rm todoapp-postgres-migrate \
+		create \
+		-ext sql \
+		-dir /migrations \
+		-seq "$(seq)"
+
+# win-edition
+# 	ifndef seq
+# 		$(error отсутствует необходимый параметр seq. Пример: make migrate-create seq=init)
+# 	endif
+# 		docker compose run --rm todoapp-postgres-migrate create -ext sql -dir /migrations -seq "$(seq)"
 
 
 migrate-up:
@@ -67,10 +70,17 @@ logs-cleanup:
 		echo "очистка логов отменена"; \
 	fi
 
+# todoapp-run:
+# 	win-edition
+# 	@go mod tidy
+# 	set POSTGRES_HOST=localhost& set LOGGER_FOLDER=./out/logs& go run cmd/todoapp/main.go
+
+
+# 	linux-edition
 todoapp-run:
-	@go mod tidy
-	
-	set POSTGRES_HOST=localhost& set LOGGER_FOLDER=./out/logs& go run cmd/todoapp/main.go
+	go mod tidy
+	POSTGRES_HOST=localhost LOGGER_FOLDER=./out/logs go run cmd/todoapp/main.go
+
 
 todoapp-deploy:
 	docker compose up -d --build todoapp
