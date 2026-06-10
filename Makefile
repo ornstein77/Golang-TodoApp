@@ -24,7 +24,7 @@ env-port-close:
 	@docker compose down port-forwarder
 
 migrate-create:
-linux-edition
+# linux-edition
 	@if [ -z "$(seq)"]; then \
 		echo "отсутствует необходимый параметр seq"; \
 		exit 1; \
@@ -70,16 +70,17 @@ logs-cleanup:
 		echo "очистка логов отменена"; \
 	fi
 
-# todoapp-run:
+
 # 	win-edition
-# 	@go mod tidy
-# 	set POSTGRES_HOST=localhost& set LOGGER_FOLDER=./out/logs& go run cmd/todoapp/main.go
+todoapp-run:
+	@go mod tidy
+	set POSTGRES_HOST=localhost& set LOGGER_FOLDER=./out/logs& go run cmd/todoapp/main.go
 
 
 # 	linux-edition
-todoapp-run:
-	go mod tidy
-	POSTGRES_HOST=localhost LOGGER_FOLDER=./out/logs go run cmd/todoapp/main.go
+# todoapp-run:
+# 	go mod tidy
+# 	POSTGRES_HOST=localhost LOGGER_FOLDER=./out/logs go run cmd/todoapp/main.go
 
 
 todoapp-deploy:
@@ -89,3 +90,15 @@ todoapp-undeploy:
 	docker compose down todoapp
 ps:
 	@docker compose ps
+
+# Версия для linux
+# swagger-gen:
+# 	docker compose run --rm swagger \
+# 		init \
+# 		-g cmd/todoapp/main.go \
+# 		-o docs \
+# 		--parseInternal \
+# 		--parseDependency
+# Версия для Windows
+swagger-gen:
+	docker compose run --rm swagger init -g cmd/todoapp/main.go -o docs --parseInternal --parseDependency
