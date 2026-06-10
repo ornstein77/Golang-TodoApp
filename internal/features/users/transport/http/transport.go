@@ -4,6 +4,7 @@ import (
 	"context"
 	"net/http"
 
+	"github.com/google/uuid"
 	"github.com/ornstein77/Golang-TodoApp/internal/core/domain"
 	core_http_server "github.com/ornstein77/Golang-TodoApp/internal/core/transport/http/server"
 )
@@ -27,17 +28,17 @@ type UsersService interface {
 
 	GetUser(
 		ctx context.Context,
-		id int,
+		id uuid.UUID,
 	) (domain.User, error)
 
 	DeleteUser(
 		ctx context.Context,
-		id int,
+		id uuid.UUID,
 	) error
 
 	PatchUser(
 		ctx context.Context,
-		id int,
+		id uuid.UUID,
 		patch domain.UserPatch,
 	) (domain.User, error)
 }
@@ -61,9 +62,6 @@ func (h *UsersHTTPHandler) Routes() []core_http_server.Route {
 			Method:  http.MethodGet,
 			Path:    "/users",
 			Handler: h.GetUsers,
-			// Middleware: []core_http_middleware.Middleware{
-			// 	core_http_middleware.Dummy("get users middleware"),
-			// },
 		},
 		{
 			Method:  http.MethodGet,

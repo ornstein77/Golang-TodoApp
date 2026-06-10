@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/google/uuid"
 	"github.com/ornstein77/Golang-TodoApp/internal/core/domain"
 	core_http_server "github.com/ornstein77/Golang-TodoApp/internal/core/transport/http/server"
 )
@@ -16,7 +17,7 @@ type StatisticsHTTPHandler struct {
 type StatisticsService interface {
 	GetStatistics(
 		ctx context.Context,
-		userID *int,
+		userID *uuid.UUID,
 		from *time.Time,
 		to *time.Time,
 	) (domain.Statistics, error)

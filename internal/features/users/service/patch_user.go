@@ -4,12 +4,13 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/google/uuid"
 	"github.com/ornstein77/Golang-TodoApp/internal/core/domain"
 )
 
 func (s *UsersService) PatchUser(
 	ctx context.Context,
-	id int,
+	id uuid.UUID,
 	patch domain.UserPatch,
 ) (domain.User, error) {
 	user, err := s.usersRepository.GetUser(ctx, id)

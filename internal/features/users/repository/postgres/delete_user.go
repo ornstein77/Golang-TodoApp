@@ -4,12 +4,13 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/google/uuid"
 	core_errors "github.com/ornstein77/Golang-TodoApp/internal/core/errors"
 )
 
 func (r *UsersRepository) DeleteUser(
 	ctx context.Context,
-	id int,
+	id uuid.UUID,
 ) error {
 	ctx, cancel := context.WithTimeout(ctx, r.pool.OpTimeout())
 	defer cancel()
@@ -24,7 +25,7 @@ func (r *UsersRepository) DeleteUser(
 		return fmt.Errorf("exec query: %w", err)
 	}
 	if cmdTag.RowsAffected() == 0 {
-		return fmt.Errorf("user with id='%d': %w", id, core_errors.ErrNotFound)
+		return fmt.Errorf("user with id='%s': %w", id, core_errors.ErrNotFound)
 	}
 	return nil
 }

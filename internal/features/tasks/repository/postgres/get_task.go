@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/google/uuid"
 	"github.com/ornstein77/Golang-TodoApp/internal/core/domain"
 	core_errors "github.com/ornstein77/Golang-TodoApp/internal/core/errors"
 	core_postgres_pool "github.com/ornstein77/Golang-TodoApp/internal/core/repository/postgres/pool"
@@ -12,7 +13,7 @@ import (
 
 func (r *TasksRepository) GetTask(
 	ctx context.Context,
-	id int,
+	id uuid.UUID,
 ) (domain.Task, error) {
 	ctx, cancel := context.WithTimeout(ctx, r.pool.OpTimeout())
 	defer cancel()
@@ -39,7 +40,7 @@ func (r *TasksRepository) GetTask(
 	if err != nil {
 		if errors.Is(err, core_postgres_pool.ErrNoRows) {
 			return domain.Task{}, fmt.Errorf(
-				"task with id='%d': %w",
+				"task with id='%s': %w",
 				id,
 				core_errors.ErrNotFound,
 			)

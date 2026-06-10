@@ -3,6 +3,7 @@ package users_service
 import (
 	"context"
 
+	"github.com/google/uuid"
 	"github.com/ornstein77/Golang-TodoApp/internal/core/domain"
 )
 
@@ -25,17 +26,17 @@ type UsersRepository interface {
 
 	GetUser(
 		ctx context.Context,
-		id int,
+		id uuid.UUID,
 	) (domain.User, error)
 
 	DeleteUser(
 		ctx context.Context,
-		id int,
+		id uuid.UUID,
 	) error
 
 	PatchUser(
 		ctx context.Context,
-		id int,
+		id uuid.UUID,
 		user domain.User,
 	) (domain.User, error)
 }

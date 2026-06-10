@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/google/uuid"
 	"github.com/ornstein77/Golang-TodoApp/internal/core/domain"
 	core_errors "github.com/ornstein77/Golang-TodoApp/internal/core/errors"
 	core_postgres_pool "github.com/ornstein77/Golang-TodoApp/internal/core/repository/postgres/pool"
@@ -12,7 +13,7 @@ import (
 
 func (r *TasksRepository) PatchTask(
 	ctx context.Context,
-	id int,
+	id uuid.UUID,
 	task domain.Task,
 ) (domain.Task, error) {
 	ctx, cancel := context.WithTimeout(ctx, r.pool.OpTimeout())
@@ -64,7 +65,7 @@ func (r *TasksRepository) PatchTask(
 	if err != nil {
 		if errors.Is(err, core_postgres_pool.ErrNoRows) {
 			return domain.Task{}, fmt.Errorf(
-				"task with id='%d' concurrently accessed: %w",
+				"task with id='%s' concurrently accessed: %w",
 				id,
 				core_errors.ErrConflict,
 			)

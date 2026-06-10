@@ -3,6 +3,7 @@ package tasks_service
 import (
 	"context"
 
+	"github.com/google/uuid"
 	"github.com/ornstein77/Golang-TodoApp/internal/core/domain"
 )
 
@@ -18,23 +19,23 @@ type TasksRepository interface {
 
 	GetTasks(
 		ctx context.Context,
-		userID *int,
+		userID *uuid.UUID,
 		limit *int,
 		offset *int,
 	) ([]domain.Task, error)
 
 	GetTask(
 		ctx context.Context,
-		id int,
+		id uuid.UUID,
 	) (domain.Task, error)
 	DeleteTask(
 		ctx context.Context,
-		id int,
+		id uuid.UUID,
 	) error
 
 	PatchTask(
 		ctx context.Context,
-		id int,
+		id uuid.UUID,
 		task domain.Task,
 	) (domain.Task, error)
 }

@@ -4,11 +4,12 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/google/uuid"
 	core_errors "github.com/ornstein77/Golang-TodoApp/internal/core/errors"
 )
 
 type Task struct {
-	ID      int
+	ID      uuid.UUID
 	Version int
 
 	Title       string
@@ -17,18 +18,18 @@ type Task struct {
 	CreatedAt   time.Time
 	CompletedAt *time.Time
 
-	AuthorUserID int
+	AuthorUserID uuid.UUID
 }
 
 func NewTask(
-	id int,
+	id uuid.UUID,
 	version int,
 	title string,
 	description *string,
 	completed bool,
 	createdAt time.Time,
 	completedAt *time.Time,
-	authorUserId int,
+	authorUserId uuid.UUID,
 ) Task {
 	return Task{
 		ID:           id,
@@ -46,11 +47,11 @@ func NewTask(
 func NewTaskUninitialized(
 	title string,
 	description *string,
-	authorUserID int,
+	authorUserID uuid.UUID,
 ) Task {
 	return NewTask(
-		UninitializedID,
-		UninitializedVersion,
+		UninitializedUUID,
+		1,
 		title,
 		description,
 		false,

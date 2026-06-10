@@ -1,9 +1,12 @@
 package users_postgres_repository
 
-import "github.com/ornstein77/Golang-TodoApp/internal/core/domain"
+import (
+	"github.com/google/uuid"
+	"github.com/ornstein77/Golang-TodoApp/internal/core/domain"
+)
 
 type UserModel struct {
-	ID          int
+	ID          uuid.UUID
 	Version     int
 	FullName    string
 	PhoneNumber *string

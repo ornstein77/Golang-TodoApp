@@ -5,13 +5,14 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/google/uuid"
 	"github.com/ornstein77/Golang-TodoApp/internal/core/domain"
 	core_errors "github.com/ornstein77/Golang-TodoApp/internal/core/errors"
 )
 
 func (s *StatisticsService) GetStatistics(
 	ctx context.Context,
-	userID *int,
+	userID *uuid.UUID,
 	from *time.Time,
 	to *time.Time,
 ) (domain.Statistics, error) {

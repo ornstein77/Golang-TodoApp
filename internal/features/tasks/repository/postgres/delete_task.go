@@ -4,12 +4,13 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/google/uuid"
 	core_errors "github.com/ornstein77/Golang-TodoApp/internal/core/errors"
 )
 
 func (r *TasksRepository) DeleteTask(
 	ctx context.Context,
-	id int,
+	id uuid.UUID,
 ) error {
 	ctx, cancel := context.WithTimeout(ctx, r.pool.OpTimeout())
 	defer cancel()
@@ -25,7 +26,7 @@ func (r *TasksRepository) DeleteTask(
 	}
 	if cmdTag.RowsAffected() == 0 {
 		return fmt.Errorf(
-			"task with id='%d': %w",
+			"task with id='%s': %w",
 			id,
 			core_errors.ErrNotFound,
 		)

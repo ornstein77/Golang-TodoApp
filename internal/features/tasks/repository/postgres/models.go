@@ -3,18 +3,19 @@ package tasks_postgres_repository
 import (
 	"time"
 
+	"github.com/google/uuid"
 	"github.com/ornstein77/Golang-TodoApp/internal/core/domain"
 )
 
 type TaskModel struct {
-	ID           int
+	ID           uuid.UUID
 	Version      int
 	Title        string
 	Description  *string
 	Completed    bool
 	CreatedAt    time.Time
 	CompletedAt  *time.Time
-	AuthorUserID int
+	AuthorUserID uuid.UUID
 }
 
 func taskDomainFromModel(taskModel TaskModel) domain.Task {

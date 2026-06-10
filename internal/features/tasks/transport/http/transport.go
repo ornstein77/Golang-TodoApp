@@ -4,6 +4,7 @@ import (
 	"context"
 	"net/http"
 
+	"github.com/google/uuid"
 	"github.com/ornstein77/Golang-TodoApp/internal/core/domain"
 	core_http_server "github.com/ornstein77/Golang-TodoApp/internal/core/transport/http/server"
 )
@@ -21,24 +22,24 @@ type TasksService interface {
 
 	GetTasks(
 		ctx context.Context,
-		userID *int,
+		userID *uuid.UUID,
 		limit *int,
 		offset *int,
 	) ([]domain.Task, error)
 
 	GetTask(
 		ctx context.Context,
-		id int,
+		id uuid.UUID,
 	) (domain.Task, error)
 
 	DeleteTask(
 		ctx context.Context,
-		id int,
+		id uuid.UUID,
 	) error
 
 	PatchTask(
 		ctx context.Context,
-		id int,
+		id uuid.UUID,
 		patch domain.TaskPatch,
 	) (domain.Task, error)
 }

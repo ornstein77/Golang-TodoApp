@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/google/uuid"
 	"github.com/ornstein77/Golang-TodoApp/internal/core/domain"
 	core_errors "github.com/ornstein77/Golang-TodoApp/internal/core/errors"
 	core_postgres_pool "github.com/ornstein77/Golang-TodoApp/internal/core/repository/postgres/pool"
@@ -12,7 +13,7 @@ import (
 
 func (r *UsersRepository) GetUser(
 	ctx context.Context,
-	id int,
+	id uuid.UUID,
 ) (domain.User, error) {
 	ctx, cancel := context.WithTimeout(ctx, r.pool.OpTimeout())
 	defer cancel()
@@ -36,7 +37,7 @@ func (r *UsersRepository) GetUser(
 
 		if errors.Is(err, core_postgres_pool.ErrNoRows) {
 			return domain.User{}, fmt.Errorf(
-				"user with id'%d': %w",
+				"user with id='%s': %w",
 				id,
 				core_errors.ErrNotFound,
 			)

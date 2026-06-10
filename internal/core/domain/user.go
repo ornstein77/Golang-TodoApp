@@ -4,11 +4,12 @@ import (
 	"fmt"
 	"regexp"
 
+	"github.com/google/uuid"
 	core_errors "github.com/ornstein77/Golang-TodoApp/internal/core/errors"
 )
 
 type User struct {
-	ID      int
+	ID      uuid.UUID
 	Version int
 
 	FullName    string
@@ -16,7 +17,7 @@ type User struct {
 }
 
 func NewUser(
-	id int,
+	id uuid.UUID,
 	version int,
 	fullName string,
 	phoneNumber *string,
@@ -34,7 +35,7 @@ func NewUserUninitialized(
 	phoneNumber *string,
 ) User {
 	return NewUser(
-		UninitializedID,
+		UninitializedUUID,
 		UninitializedVersion,
 		fullName,
 		phoneNumber,

@@ -3,6 +3,7 @@ package tasks_transport_http
 import (
 	"net/http"
 
+	"github.com/google/uuid"
 	"github.com/ornstein77/Golang-TodoApp/internal/core/domain"
 	core_logger "github.com/ornstein77/Golang-TodoApp/internal/core/logger"
 	core_http_request "github.com/ornstein77/Golang-TodoApp/internal/core/transport/http/request"
@@ -12,7 +13,7 @@ import (
 type CreateTaskRequest struct {
 	Title        string  `json:"title" validate:"required,min=1,max=100" example:"Домашнее задание`
 	Description  *string `json:"description" validate:"omitempty,min=1,max=1000" example:"Сделать до четверга домашнее задание по математике"`
-	AuthorUserID int     `json:"author_user_id" validate:"required" example:"550e8400-e29b-41d4-a716-446655440000"`
+	AuthorUserID uuid.UUID `json:"author_user_id" validate:"required" example:"550e8400-e29b-41d4-a716-446655440000"`
 }
 
 type CreateTaskResponse TaskDTOResponse

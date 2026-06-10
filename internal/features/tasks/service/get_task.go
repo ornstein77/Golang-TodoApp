@@ -4,12 +4,13 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/google/uuid"
 	"github.com/ornstein77/Golang-TodoApp/internal/core/domain"
 )
 
 func (s *TasksService) GetTask(
 	ctx context.Context,
-	id int,
+	id uuid.UUID,
 ) (domain.Task, error) {
 	task, err := s.tasksRepository.GetTask(ctx, id)
 

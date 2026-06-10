@@ -6,12 +6,13 @@ import (
 	"strings"
 	"time"
 
+	"github.com/google/uuid"
 	"github.com/ornstein77/Golang-TodoApp/internal/core/domain"
 )
 
 func (r *StatisticsRepository) GetTasks(
 	ctx context.Context,
-	userID *int,
+	userID *uuid.UUID,
 	from *time.Time,
 	to *time.Time,
 ) ([]domain.Task, error) {

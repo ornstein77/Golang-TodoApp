@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/google/uuid"
 	core_logger "github.com/ornstein77/Golang-TodoApp/internal/core/logger"
 	core_http_request "github.com/ornstein77/Golang-TodoApp/internal/core/transport/http/request"
 	core_http_response "github.com/ornstein77/Golang-TodoApp/internal/core/transport/http/response"
@@ -51,25 +52,27 @@ func (h *TasksHTTPHandler) GetTasks(rw http.ResponseWriter, r *http.Request) {
 	responseHandler.JSONResponse(response, http.StatusOK)
 }
 
-func getUserIDLimitOffsetQueryParams(r *http.Request) (*int, *int, *int, error) {
+func getUserIDLimitOffsetQueryParams(r *http.Request) (*uuid.UUID, *int, *int, error) {
 	const (
 		userIDQueryParamKey = "user_id"
 		limitQueryParamKey  = "limit"
 		offsetQueryParamKey = "offset"
 	)
 
-	userID, err := core_http_request.GetQueryParam(r, userIDQueryParamKey)
+	userID, err := core_http_request.GetUUIDQueryParam(r, userIDQueryParamKey)
 	if err != nil {
-		return nil, nil, nil, fmt.Errorf("get user id query param: %w", err)
+		return nil, nil, nil, fmt.Errorf("get 'user_id' query param: %w", err)
 	}
-	limit, err := core_http_request.GetQueryParam(r, limitQueryParamKey)
+
+	limit, err := core_http_request.GetIntQueryParam(r, limitQueryParamKey)
 	if err != nil {
 		return nil, nil, nil, fmt.Errorf("get 'limit' query param: %w", err)
 	}
 
-	offset, err := core_http_request.GetQueryParam(r, offsetQueryParamKey)
+	offset, err := core_http_request.GetIntQueryParam(r, offsetQueryParamKey)
 	if err != nil {
 		return nil, nil, nil, fmt.Errorf("get 'offset' query param: %w", err)
 	}
+
 	return userID, limit, offset, nil
 }

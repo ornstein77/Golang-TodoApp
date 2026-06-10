@@ -1,12 +1,15 @@
 package users_transport_http
 
-import "github.com/ornstein77/Golang-TodoApp/internal/core/domain"
+import (
+	"github.com/google/uuid"
+	"github.com/ornstein77/Golang-TodoApp/internal/core/domain"
+)
 
 type UserDTOResponse struct {
-	ID          int     `json:"id"  example:"10"`
-	Version     int     `json:"version" example:"3"`
-	FullName    string  `json:"full_name" example:"Ivan Ivanov"`
-	PhoneNumber *string `json:"phone_number" example:"+799988877"`
+	ID          uuid.UUID `json:"id"  example:"550e8400-e29b-41d4-a716-446655440000"`
+	Version     int       `json:"version" example:"3"`
+	FullName    string    `json:"full_name" example:"Ivan Ivanov"`
+	PhoneNumber *string   `json:"phone_number" example:"+799988877"`
 }
 
 func userDTOFromDomain(user domain.User) UserDTOResponse {
