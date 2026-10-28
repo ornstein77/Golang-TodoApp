@@ -149,7 +149,5 @@ make swagger-gen
 - генерация документации API в формате Swagger;
 - запуск приложения и базы данных с помощью Docker Compose.
 
-## Репозиторий
 
-Исходный код проекта: [ornstein77/Golang-TodoApp](https://github.com/ornstein77/Golang-TodoApp).
 
